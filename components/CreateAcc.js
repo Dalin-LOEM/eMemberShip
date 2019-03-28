@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import {View, Text, StyleSheet, TextInput} from 'react-native'
+import {View, Text, StyleSheet, TextInput, TouchableOpacity} from 'react-native'
 import {Container, Icon, Button, CheckBox} from 'native-base'
 import { Actions } from 'react-native-router-flux'
 
@@ -13,27 +13,25 @@ export default class CreateAcc extends Component{
             password: '',
             passwordAgain: '',
             textBox: '',
-            asterisk: '',
+            fnameValidate: true,
         }
         this.createAcc = this.createAcc.bind(this);
     }
 
-    createAcc(){
-        const { lname, fname, Pnumber, validate , baseurl, asterisk} = this.state;
-        var isValid = true;
-        if(lname==""){
-            validate.asterisk.color = 'red';
-            messge = I18n.t('titleAlert');
-            isValid = false;
+    createAcc(type, text){
+        const {firstname} = this.state;
+        alph=/^[a-zA-Z]+$/
+        if(type=='firstname'){
+            // if(alph.test(text)){
+            //     alert('correct');
+            // }else{
+            //     alert('check your firstname again!');
+            // }
+            alert('not null');
         }else{
-            validate.asterisk.hide();
+            alert('null');
         }
-            
-        this.setState({
-            validate: validate
-        });
     }
-
     render(){
         return(
             <Container>
@@ -81,11 +79,10 @@ export default class CreateAcc extends Component{
                     <View style={styles.mainStyle}>
                         <TextInput
                             style={styles.inputtext}
-                            value={this.state.lastname}
+                            value={this.state.firstname}
                             placeholder="First Name"
-                            onChangeText={
-                            lastname => this.setState({ lastname })
-                        }/>
+                            onChangeText={(text)=>this.validate(text, 'firstname')}
+                        />
                     </View>  
                 </View>
                 <View>
@@ -135,8 +132,10 @@ export default class CreateAcc extends Component{
                                     height: 30, marginTop: "5%"}}
                             
                     >
+                    <TouchableOpacity onPress={this.createAcc}>
+                        <Text >CREATE ACCOUNT</Text>
+                    </TouchableOpacity>
                         {/* <Text transparent onPress={()=>Actions.profile()}>CREATE ACCOUNT</Text> */}
-                        <Text onPress={this.createAcc}>CREATE ACCOUNT</Text>
                     </Button>
                 </View>
                 <View style={styles.mainStyle}>
