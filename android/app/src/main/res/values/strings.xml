@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">eMemberShip</string>
+    <string name="facebook_app_id">260491124894963</string>
+    <string name="fb_login_protocol_scheme">fb260491124894963</string>
+</resources>
