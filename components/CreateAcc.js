@@ -12,25 +12,52 @@ export default class CreateAcc extends Component{
             email: '',
             password: '',
             passwordAgain: '',
-            textBox: '',
-            fnameValidate: true,
+            checked: false
         }
         this.createAcc = this.createAcc.bind(this);
     }
 
-    createAcc(type, text){
-        const {firstname} = this.state;
-        alph=/^[a-zA-Z]+$/
-        if(type=='firstname'){
-            // if(alph.test(text)){
-            //     alert('correct');
-            // }else{
-            //     alert('check your firstname again!');
-            // }
-            alert('not null');
+    createAcc(){
+        const{firstname, lastname, email, password, passwordAgain} = this.state;
+        let titleMessage = "Please fill in the fields with an asterisk (*)";
+        var isValid = true;
+        if(lastname ==""){
+            messge = (titleMessage);
+            isValid=false;
         }else{
-            alert('null');
+            isValid=true;
         }
+        if(firstname ==""){
+            messge = (titleMessage);
+            isValid=false;
+        }else{
+            isValid=true;
+        }
+        if(email ==""){
+            messge = (titleMessage);
+            isValid=false;
+        }else{
+            isValid=true;
+        }
+        if(password ==""){
+            messge = (titleMessage);
+            isValid=false;
+        }else{
+            isValid=true;
+        }
+        if(passwordAgain ==""){
+            messge = (titleMessage);
+            isValid=false;
+        }else{
+            isValid=true;
+        }
+       
+        if(isValid){
+            Actions.profile()
+        }else{
+            alert(titleMessage);
+        }
+            
     }
     render(){
         return(
@@ -69,7 +96,7 @@ export default class CreateAcc extends Component{
                         <TextInput
                             style={styles.inputtext}
                             value={this.state.lastname}
-                            placeholder="Last Name"
+                            placeholder="Last Name *"
                             onChangeText={
                             lastname => this.setState({ lastname })
                         }/>
@@ -80,8 +107,10 @@ export default class CreateAcc extends Component{
                         <TextInput
                             style={styles.inputtext}
                             value={this.state.firstname}
-                            placeholder="First Name"
-                            onChangeText={(text)=>this.validate(text, 'firstname')}
+                            placeholder="First Name *"
+                            onChangeText={
+                                firstname=> this.setState({firstname})
+                            }
                         />
                     </View>  
                 </View>
@@ -90,7 +119,7 @@ export default class CreateAcc extends Component{
                         <TextInput
                             style={styles.inputtext}
                             value={this.state.email}
-                            placeholder="E-mail"
+                            placeholder="E-mail *"
                             onChangeText={
                             email => this.setState({ email })
                         }/>
@@ -101,7 +130,7 @@ export default class CreateAcc extends Component{
                         <TextInput
                             style={styles.inputtext}
                             value={this.state.password}
-                            placeholder="Password"
+                            placeholder="Password *"
                             onChangeText={
                             password => this.setState({ password })
                         }/>
@@ -112,7 +141,7 @@ export default class CreateAcc extends Component{
                         <TextInput
                             style={styles.inputtext}
                             value={this.state.passwordAgain}
-                            placeholder="Password Again"
+                            placeholder="Password Again *"
                             onChangeText={
                                 passwordAgain => this.setState({ passwordAgain })
                         }/>
@@ -120,7 +149,10 @@ export default class CreateAcc extends Component{
                 </View>
                 <View style={styles.mainStyle}>
                     <View style={{width: '10%', marginTop: '5%'}}>
-                        <CheckBox color="gray"/>
+                        <CheckBox color="gray"
+                                 value={this.state.checked}
+                                 onValueChange={() => this.setState({ checked: !this.state.checked })}
+                        />
                     </View>
                     <View style={{width: '61%', marginTop: '5%'}}>
                         <Text>Create a registered customer account using my data, I agree with the Privacy Policy and Terms and Conditions</Text>
