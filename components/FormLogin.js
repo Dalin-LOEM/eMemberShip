@@ -12,36 +12,34 @@ export default class FormLogin extends Component{
         this.state= {
             checked: false,
             pass: '',
-            baseurl: '',
-        }
-        if(pass == ""){
-            
+            email: '',
         }
     }  
-    onSave = ()=>{
+  
+    LoginForm = ()=>{
         const {pass} = this.state;
-        /*----save data with AsyncStorage----*/
         let myArray={
             pass: pass
         }
-        if(pass == ""){
-           alert("type password")
+        if(pass == "" || pass.length < 8){
+           alert("Please fill password more then 7 character!")
         }else{
            AsyncStorage.setItem('myArray',
            JSON.stringify(myArray));
-           Alert.alert("Your url save successfully");
+           Actions.welcomeEs();
         }
      }
-  
-     showData = async() => {
+     componentDidMount = async() => {
         let myArray = await AsyncStorage.getItem('myArray');
         let data = JSON.parse(myArray);
         this.setState({pass:data.pass})
-     }
-    
-    LoginForm = async() =>{
-       
+        // if(data.pass==""){
+        //     alert('pass empty');
+        // }else{
+        //     Actions.welcomeEs();
+        // }
     }
+   
     render(){
         return(
             <Container>
@@ -54,15 +52,15 @@ export default class FormLogin extends Component{
                         <View>
                             <Item floatingLabel>
                                 <Label>Username</Label>
-                                <Input />
+                                <Input onChangeText={email => this.setState({email})}/>
                             </Item>
                             <Item floatingLabel last>
                                 <Label >
                                         Password
                                 </Label>
                                 <Input 
-                                    // password={true}
-                                    // secureTextEntry={true}
+                                    password={true}
+                                    secureTextEntry={true}
                                     value={this.state.pass}
                                     onChangeText={
                                         pass => this.setState({ pass })
@@ -71,11 +69,10 @@ export default class FormLogin extends Component{
                         </View>
                         <View style={{flexDirection: 'row',paddingLeft: "3%", marginTop: 10}}>
                             <View>
-                                <Text onPress={this.onSave}>save</Text>
-                                    <CheckBox
-                                        value={this.state.checked}
-                                        onPress={() => this.setState({checked: !this.state.checked})}
-                                    />
+                                <CheckBox
+                                    value={this.state.checked}
+                                    onPress={() => this.setState({checked: !this.state.checked})}
+                                />         
                             </View>
                             <View>
                                 <Text style={{marginTop: 4}} onPress={this.showData}>Remember Password</Text>
@@ -85,7 +82,7 @@ export default class FormLogin extends Component{
                             <Button rounded style={{justifyContent: "center", backgroundColor: "#C99E67", width: "90%", 
                                                     height: 30, marginTop: "10%", marginLeft: "7%"}}>
                                 <TouchableOpacity>
-                                    <Text transparent onPress={()=>Actions.welcomeEs()}>Login</Text>
+                                    <Text transparent onPress={this.LoginForm}>Login</Text>
                                 </TouchableOpacity>
                             </Button>
                             <Text/>
