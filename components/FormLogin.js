@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import {Image, View, CheckBox, TouchableOpacity, AsyncStorage} from 'react-native'
+import {Image, View, CheckBox, TouchableOpacity, AsyncStorage, Alert} from 'react-native'
 import {
     Container, Header, Title, Content, Left, Right, Icon, Text, Button, Body, Form, Label, Item, Input} from 'native-base'
 import { Actions } from 'react-native-router-flux'
@@ -12,23 +12,30 @@ export default class FormLogin extends Component{
         this.state= {
             checked: false,
             pass: '',
+            baseurl: '',
         }
-        this.saveData();
-    }
-    saveData(){
-        // const {pass} = this.state;
-        let password = this.state.pass;
-        AsyncStorage.setItem('password', password);
-        // alert(password);
-    }
+    }  
+    onSave = ()=>{
+        const {pass} = this.state;
+        /*----save data with AsyncStorage----*/
+        let myArray={
+            pass: pass
+        }
+        if(pass == ""){
+           alert("Please type your url")
+        }else{
+           AsyncStorage.setItem('myArray',
+           JSON.stringify(myArray));
+           Alert.alert("Your url save successfully");
+        }
+     }
+  
+     showData = async() => {
+        let myArray = await AsyncStorage.getItem('myArray');
+        let data = JSON.parse(myArray);
+        this.setState({pass:data.pass})
+     }
 
-    displayData = async()=>{
-        try{
-            let pass = await AsyncStorage.getItem('pass', pass);
-        }catch (error){
-            alert(error);
-        }
-    }
     LoginForm(){
 
     }
@@ -37,6 +44,9 @@ export default class FormLogin extends Component{
             <Container>
                 <Content>
                     <Image source={require('../assets/images/eMembership.jpg')} style={{height: 200, width: null, flex: 1}}/>
+                    <View style={{backgroundColor: 'gray'}}>
+                    
+                    </View>
                     <Form style={{width: "85%",paddingLeft: "10%"}}>
                         <View>
                             <Item floatingLabel>
@@ -44,36 +54,34 @@ export default class FormLogin extends Component{
                                 <Input />
                             </Item>
                             <Item floatingLabel last>
-                                <Label 
-                                        value={this.state.pass}
-                                        onChangeText={
-                                            pass => this.setState({ pass })
-                                        }>
+                                <Label >
                                         Password
                                 </Label>
-                                <Input />
+                                <Input 
+                                    password={true}
+                                    secureTextEntry={true}
+                                    value={this.state.pass}
+                                    onChangeText={
+                                        pass => this.setState({ pass })
+                                    }></Input>
                             </Item>
                         </View>
                         <View style={{flexDirection: 'row',paddingLeft: "3%", marginTop: 10}}>
                             <View>
-                                <CheckBox
-                                    value={this.state.checked}
-                                    onValueChange={() => this.setState({ checked: !this.state.checked })}
-                                />
+                                {/* <Text onPress={this.onSave}>save</Text> */}
+                                    <CheckBox
+                                        value={this.state.checked}
+                                        onPress={() => this.setState({checked: !this.state.checked})}
+                                    />
                             </View>
                             <View>
-                                <TouchableOpacity onPress={this.saveData}>
-                                    <Text style={{marginTop: 4}}>Remember Password</Text>
-                                </TouchableOpacity>
-                                <TouchableOpacity onPress={this.displayData}>
-                                    <Text style={{marginTop: 4}}>Show Password</Text>
-                                </TouchableOpacity>
+                                <Text style={{marginTop: 4}} onPress={this.onSave}>Remember Password</Text>
                             </View>
                         </View>
                         <View>
                             <Button rounded style={{justifyContent: "center", backgroundColor: "#C99E67", width: "90%", 
                                                     height: 30, marginTop: "10%", marginLeft: "7%"}}>
-                                <TouchableOpacity onPress={this.LoginForm}>
+                                <TouchableOpacity>
                                     <Text transparent onPress={()=>Actions.welcomeEs()}>Login</Text>
                                 </TouchableOpacity>
                             </Button>
@@ -108,6 +116,16 @@ export default class FormLogin extends Component{
                                 </Button>
                             </View>
                         </View>
+                            
+                            {/* <Right style={{padding: '5%'}}>
+                                <Button info style={{height: 30}}>
+                                <Text style={{width: '40%', textAlign: 'center'}} onPress={this.OnSave}>save</Text>
+                                </Button>
+                                <Text/>
+                                <Button primary style={{height: 30}}>
+                                    <Text style={{width: '40%', textAlign: 'center'}} onPress={this.showData}>Show Data</Text>
+                                </Button>
+                            </Right> */}
                     </Form>
                 </Content>
           </Container>

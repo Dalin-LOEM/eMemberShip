@@ -51,11 +51,21 @@ export default class CreateAcc extends Component{
         }else{
             isValid=true;
         }
-       
+        
+        if(password != passwordAgain){
+            messge=("Please check your password again!");
+            isValid= false;
+        }else{
+            isValid = true;
+        }
+
         if(isValid){
             Actions.profile()
+        }else if(password != passwordAgain){
+            alert("Please check your password again!");
         }else{
             alert(titleMessage);
+
         }
             
     }
@@ -131,9 +141,10 @@ export default class CreateAcc extends Component{
                             style={styles.inputtext}
                             value={this.state.password}
                             placeholder="Password *"
-                            onChangeText={
-                            password => this.setState({ password })
-                        }/>
+                            password={true}
+                            secureTextEntry={true}
+                            onChangeText={(password) => this.setState({ password })}
+                        />
                     </View>  
                 </View>
                 <View>
@@ -142,8 +153,10 @@ export default class CreateAcc extends Component{
                             style={styles.inputtext}
                             value={this.state.passwordAgain}
                             placeholder="Password Again *"
+                            password={true}
+                            secureTextEntry={true}
                             onChangeText={
-                                passwordAgain => this.setState({ passwordAgain })
+                                (passwordAgain) => this.setState({ passwordAgain })
                         }/>
                     </View>  
                 </View>

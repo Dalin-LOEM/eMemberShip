@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import {View, Text, StyleSheet, TextInput, Picker} from 'react-native'
+import {View, Text, StyleSheet, TextInput, Picker, TouchableOpacity} from 'react-native'
 import {Container, Icon, Button, Header, Left, Right, Title, Body} from 'native-base'
 import { Actions } from 'react-native-router-flux'
 
@@ -15,6 +15,12 @@ export default class CreateAcc extends Component{
             fixedPhone: '',
             wechatId: '',
         }
+        this.confirm = this.confirm.bind(this);
+    }
+
+    confirm(){
+        const{address, zipCode, city, country, mobilePhone, fixedPhone, wechatId} = this.state;
+        alert(address+ zipCode + city + country + mobilePhone + fixedPhone + wechatId);
     }
     render(){
         return(
@@ -118,7 +124,9 @@ export default class CreateAcc extends Component{
                 <View style={styles.mainStyle}>
                     <Button rounded style={{justifyContent: "center", backgroundColor: "#C99E67", width: "60%", 
                                             height: 30, marginTop: "5%"}}>
-                        <Text>CONFIRM</Text>
+                        <TouchableOpacity onPress={this.confirm}>
+                            <Text>CONFIRM</Text>
+                        </TouchableOpacity>
                     </Button>
                 </View>
                 <View style={styles.mainStyle}>
