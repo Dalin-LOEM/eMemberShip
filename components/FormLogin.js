@@ -14,6 +14,9 @@ export default class FormLogin extends Component{
             pass: '',
             baseurl: '',
         }
+        if(pass == ""){
+            
+        }
     }  
     onSave = ()=>{
         const {pass} = this.state;
@@ -22,7 +25,7 @@ export default class FormLogin extends Component{
             pass: pass
         }
         if(pass == ""){
-           alert("Please type your url")
+           alert("type password")
         }else{
            AsyncStorage.setItem('myArray',
            JSON.stringify(myArray));
@@ -35,9 +38,9 @@ export default class FormLogin extends Component{
         let data = JSON.parse(myArray);
         this.setState({pass:data.pass})
      }
-
-    LoginForm(){
-
+    
+    LoginForm = async() =>{
+       
     }
     render(){
         return(
@@ -58,8 +61,8 @@ export default class FormLogin extends Component{
                                         Password
                                 </Label>
                                 <Input 
-                                    password={true}
-                                    secureTextEntry={true}
+                                    // password={true}
+                                    // secureTextEntry={true}
                                     value={this.state.pass}
                                     onChangeText={
                                         pass => this.setState({ pass })
@@ -68,14 +71,14 @@ export default class FormLogin extends Component{
                         </View>
                         <View style={{flexDirection: 'row',paddingLeft: "3%", marginTop: 10}}>
                             <View>
-                                {/* <Text onPress={this.onSave}>save</Text> */}
+                                <Text onPress={this.onSave}>save</Text>
                                     <CheckBox
                                         value={this.state.checked}
                                         onPress={() => this.setState({checked: !this.state.checked})}
                                     />
                             </View>
                             <View>
-                                <Text style={{marginTop: 4}} onPress={this.onSave}>Remember Password</Text>
+                                <Text style={{marginTop: 4}} onPress={this.showData}>Remember Password</Text>
                             </View>
                         </View>
                         <View>
@@ -100,10 +103,10 @@ export default class FormLogin extends Component{
                                 <Text>Or countinue with</Text>
                             </View>
                             <View style={{marginLeft: '5%'}}>
-                                {/* <Button rounded style={{ backgroundColor: '#3B5998', width: '100%', height: 25}}>
+                                <Button rounded style={{ backgroundColor: '#3B5998', width: '100%', height: 25}}>
                                     <Icon name="logo-facebook" />
-                                </Button> */}
-                                <LoginFb/>
+                                </Button>
+                                {/* <LoginFb/> */}
                             </View>
                             <View style={{marginLeft: '3%'}}>
                                 <Button rounded style={{ backgroundColor: '#E44C4A', width: '100%', height: 25}}>
@@ -116,16 +119,6 @@ export default class FormLogin extends Component{
                                 </Button>
                             </View>
                         </View>
-                            
-                            {/* <Right style={{padding: '5%'}}>
-                                <Button info style={{height: 30}}>
-                                <Text style={{width: '40%', textAlign: 'center'}} onPress={this.OnSave}>save</Text>
-                                </Button>
-                                <Text/>
-                                <Button primary style={{height: 30}}>
-                                    <Text style={{width: '40%', textAlign: 'center'}} onPress={this.showData}>Show Data</Text>
-                                </Button>
-                            </Right> */}
                     </Form>
                 </Content>
           </Container>

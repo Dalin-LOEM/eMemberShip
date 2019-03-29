@@ -20,7 +20,7 @@ export default class CreateAcc extends Component{
 
     confirm(){
         const{address, zipCode, city, country, mobilePhone, fixedPhone, wechatId} = this.state;
-        alert(address+ zipCode + city + country + mobilePhone + fixedPhone + wechatId);
+        Actions.welcomeEs();
     }
     render(){
         return(
